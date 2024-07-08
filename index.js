@@ -2,8 +2,8 @@ import express, { json } from "express";
 import data from "./data/data.json" assert { type: "json" };
 
 const app = express();
-
 const PORT = 3000;
+app.use(express.json())
 app.get("/", (req, res) => {
   res.send("hello world");
 });
@@ -32,9 +32,18 @@ app.get("/fruits/:fruitName?", (req, res) => {
     if (!fruit) {
       res.status(404).send("fruit not found");
     }
-    res.send(fruit);
+    res.status(200).send(fruit);
+  }else if(!fruitName){
+    res.status(200).send(data)
+  }else if(!data){
+    res.status(500).send("server error")
   }
 });
+
+app.post("/fruits",(req,res)=>{
+console.log(req.body);
+res.send("data accepted successfully")
+})
 
 app.get("/users/:id?", (req, res) => {
   if (req.params.id) {
