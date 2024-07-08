@@ -1,9 +1,10 @@
 import express, { json } from "express";
 import data from "./data/data.json" assert { type: "json" };
-
+import fs from "fs";
+import path from "path";
 const app = express();
 const PORT = 3000;
-app.use(express.json())
+app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hello world");
 });
@@ -33,17 +34,33 @@ app.get("/fruits/:fruitName?", (req, res) => {
       res.status(404).send("fruit not found");
     }
     res.status(200).send(fruit);
-  }else if(!fruitName){
-    res.status(200).send(data)
-  }else if(!data){
-    res.status(500).send("server error")
+  } else if (!fruitName) {
+    res.status(200).send(data);
+  } else if (!data) {
+    res.status(500).send("server error");
   }
 });
+fs.readFile("/fruits", (err, data) => {
+  let pine = {
+    id: 9,
+    name: "Pineapple",
+    color: "green",
+    taste: "Sweet",
+    price_per_kg: 2.5,
+    origin: "nigeria",
+    description:
+      "A juicy tropical fruit with a sweet and fragrant orange flesh. Mangoes are loved for their rich flavor.",
+    image: "https://example.com/images/mango.jpg",
+  };
+  let json = JSON.parse(data);
+  json.push(`search result: ${pine}`);
+  fs.writeFile("./data/data.json", JSON.stringify(json));
+});
 
-app.post("/fruits",(req,res)=>{
-console.log(req.body);
-res.send("data accepted successfully")
-})
+app.post("/fruits", (req, res) => {
+  console.log(req.body);
+  res.send("data accepted successfully");
+});
 
 app.get("/users/:id?", (req, res) => {
   if (req.params.id) {
