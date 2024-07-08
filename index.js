@@ -1,4 +1,5 @@
-import express from "express";
+import express, { json } from "express";
+import data from "./data/data.json" assert {type:"json"}
 
 const app = express();
 
@@ -24,6 +25,12 @@ app.get("/ab*cd", (req, res) => {
 app.get(/.*able$/, (req, res) => {
   res.send("any path that has able in it");
 });
+app.get("/fruits/:fruitName?",(req,res)=>{
+const {fruitName} = req.params
+if(fruitName){
+  
+}
+})
 
 app.get("/users/:id?", (req, res) => {
   if (req.params.id){
