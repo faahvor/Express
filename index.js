@@ -2,6 +2,7 @@ import express, { json } from "express";
 import data from "./data/data.json" assert { type: "json" };
 import fs from "fs";
 import path from "path";
+
 const app = express();
 const PORT = 3000;
 app.use(express.json());
@@ -40,8 +41,10 @@ app.get("/fruits/:fruitName?", (req, res) => {
     res.status(500).send("server error");
   }
 });
-fs.readFile("/fruits", (err, data) => {
-  let pine = {
+
+//adding to the data.json
+
+ let pine = {
     id: 9,
     name: "Pineapple",
     color: "green",
@@ -52,15 +55,8 @@ fs.readFile("/fruits", (err, data) => {
       "A juicy tropical fruit with a sweet and fragrant orange flesh. Mangoes are loved for their rich flavor.",
     image: "https://example.com/images/mango.jpg",
   };
-  let json = JSON.parse(data);
-  json.push(`search result: ${pine}`);
-  fs.writeFile("./data/data.json", JSON.stringify(json));
-});
+  
 
-app.post("/fruits", (req, res) => {
-  console.log(req.body);
-  res.send("data accepted successfully");
-});
 
 app.get("/users/:id?", (req, res) => {
   if (req.params.id) {
