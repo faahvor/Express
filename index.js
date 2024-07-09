@@ -3,6 +3,7 @@ import data from "./data/data.json" assert { type: "json" };
 import fs from "fs";
 import path from "path";
 
+
 const app = express();
 const PORT = 3000;
 app.use(express.json());
@@ -21,9 +22,14 @@ app.get("/ab+c+d", (req, res) => {
 app.get("/ab*cd", (req, res) => {
   res.send("tell me my name ");
 });
-// app.get(/a/, (req, res) => {
-//   res.send("path for /a/ ");
-// });
+app.post("/fruits", (req, res) => {
+  console.log(req.body);
+  const body = req.body;
+  data.push(body);
+  console.log(data);
+  res.send("saved successfully");
+
+});
 app.get(/.*able$/, (req, res) => {
   res.send("any path that has able in it");
 });
@@ -44,17 +50,21 @@ app.get("/fruits/:fruitName?", (req, res) => {
 
 //adding to the data.json
 
- let pine = {
-    id: 9,
-    name: "Pineapple",
-    color: "green",
-    taste: "Sweet",
-    price_per_kg: 2.5,
-    origin: "nigeria",
-    description:
-      "A juicy tropical fruit with a sweet and fragrant orange flesh. Mangoes are loved for their rich flavor.",
-    image: "https://example.com/images/mango.jpg",
+ let newData = {
+    "id": 9,
+    "name": "cherry",
+    "color": "brown",
+    "taste": "Sweet",
+    "price_per_kg": 2.5,
+    "origin": "nigeria",
+    "description":
+      "A juicy tropical fruit with a sweet and fragrant sour flesh. cherry are loved for their rich flavor.",
+    "image": "https://example.com/images/mango.jpg",
   };
+
+
+
+
   
 
 
